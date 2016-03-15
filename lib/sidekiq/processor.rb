@@ -123,6 +123,7 @@ module Sidekiq
         klass  = job['class'.freeze].constantize
         worker = klass.new
         worker.jid = job['jid'.freeze]
+        worker.enqueued_at = Time.at(job['enqueued_at'.freeze]).utc if job['enqueued_at'.freeze]
 
         stats(worker, job, queue) do
           Sidekiq.server_middleware.invoke(worker, job, queue) do

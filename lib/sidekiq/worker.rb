@@ -22,6 +22,7 @@ module Sidekiq
   # Note that perform_async is a class method, perform is an instance method.
   module Worker
     attr_accessor :jid
+    attr_accessor :enqueued_at
 
     def self.included(base)
       raise ArgumentError, "You cannot include Sidekiq::Worker in an ActiveJob: #{base.name}" if base.ancestors.any? {|c| c.name == 'ActiveJob::Base' }
